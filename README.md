@@ -1,45 +1,86 @@
-# LM_auto_run 龙猫自动化晨跑代跑 让机器学会自动跑步
-龙猫自动化晨跑项目 __所需文件资源已经全部上传__
+# LongMao Auto Runner
 
-基于android simulator、pyautogui、cv2、scheduletasks 完成全部自动化 不需要人起床！！！
+[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-onerun()函数,只要输入你的微信密码就可自动化跑步
-## 实现思路
-定时启动模拟用户登录微信、龙猫，然后使用虚拟定位模拟跑步行为
+An automated script for running tasks in the "LongMao" application inside the Nox Android emulator. This project has been refactored with a modern, robust, and scalable architecture to improve maintainability and reliability.
 
-## 使用注意事项
+**Language:**
+[English](./README.md) | [中文](./README.zh-CN.md)
 
-需要配置Nox夜神模拟器应用环境及相关设置：
-- 安装夜神模拟器 https://www.yeshen.com/ 作者使用的内核是android7 (32-bit)版本，__不排除其他版本无法使用此项目的可能性__ ！！！
-- __inNox和killNox函数都需要把夜神模拟器的根目录添加到系统环境变量里，不然无法使用cmd打开Nox.exe__ ！！！
-- schtask需要写bat脚本运行这些py文件，然后添加每天定时启动时间就行，有条件的可以使用系统Bios自带的定时开机（设置为开机自动运行脚本）!
-- 打开模拟键位（键盘操控中的 __模拟行走__   WASD控制朝哪个方向走   QE调节速度）！！ 
+## Key Features
 
-- 导入录制的脚本（默认 /resources/南财北苑(纬度32.121213,经度118.92673).7z  __默认起始点南财北苑__）！！
-- 收藏出发点定位（默认起点：纬度32.121213,经度118.92673 __方便每天自动校正定位__）！！
-- 以上3步也可以通过使用 __Fake Location__ 解决 
+- **Structured & Modular:** Code is organized into logical modules (config, automation, image location) for easy maintenance.
+- **Configuration-Driven:** All settings, paths, and credentials are externalized into a `config.yaml` file. No more hard-coded values.
+- **Robust Error Handling:** Implements custom exceptions and a `try...except` structure to handle common failures gracefully (e.g., image not found, Nox not started).
+- **Automatic Retries:** Automatically retries failed image-finding operations to handle UI lag and improve success rates.
+- **Comprehensive Logging:** Logs all actions to both the console and a rotating log file (`app.log`) for easy debugging.
 
-- 安装微信和龙猫校园
+## Project Structure
 
-- 微信需要登陆你自己的账户 (__账户密码形式__)！！！
+```
+LongMao_Auto_Run/
+├── assets/              # Image assets for GUI automation
+├── config/              # Configuration files
+│   └── config.yaml
+├── src/                 # Source code
+│   ├── automator.py     # Core automation logic
+│   ├── config.py        # Config loader
+│   ├── exceptions.py    # Custom exceptions
+│   ├── image_locator.py # Image recognition and clicking
+│   ├── logger.py        # Logging setup
+│   └── utils.py         # Utility functions (e.g., retry decorator)
+├── main.py              # Main entry point of the application
+├── requirements.txt     # Project dependencies
+└── README.md            # This file
+```
 
-- 在你的本地电脑中下载截图包，并在代码中 __更新截图文件路径__ ！！！
+## Getting Started
 
-## Q&A
-1. 我能否跑多个人的龙猫?
-    - 可行，作者使用的是模拟器多开，有需要代码的可在Issue或discussion中提出
-    - 对电脑配置要求比较高，资源耗费较大
-2. 我不是南财的能跑吗?
-    - 可以
-    - 替换初始定位和模拟器录制脚本即可实现
-    - 初始定位使用你想要的出发点，用它替换定位收藏点位
-    - 需要重新录制跑步脚本（使用键盘WASDQE模拟行走跑步）
-3. 会被查出来吗
-    - 目前龙猫的反作弊机制极其垃圾，大家也不需要多虑
-    - 改系统时间到晨跑时间的Bug好像又被内部放了出来，极有可能说明龙猫内部开发管理跟代跑从业人员有利益勾结，不然也不会修复了Bug又放了出来，我觉得着实离谱
+### 1. Prerequisites
 
-## 资助
-各位老板帅气美丽！当然也欢迎各位小伙伴白嫖！反制代跑垄断高价付费，自我代跑！！！
+- Python 3.8 or newer.
+- [Nox Android Emulator](https://www.bignox.com/) installed.
 
-<img src="https://github.com/VoxHwa/selecting-lesson-fast/blob/main/payment/alipay.jpg" width = "200" height = "300" alt="" align=left />
-<img src="https://github.com/VoxHwa/selecting-lesson-fast/blob/main/payment/wechat.jpg" width = "200" height = "300" alt="" align=left />
+### 2. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/LongMao_Auto_Run.git
+cd LongMao_Auto_Run
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## Configuration
+
+Before running the application, you must configure it:
+1.  Open the `config/config.yaml` file.
+2.  Fill in your WeChat credentials under the `wechat` section:
+    ```yaml
+    wechat:
+      account: "your_wechat_account"
+      password: "your_wechat_password"
+    ```
+3.  (Optional) Adjust other settings like delays, timeouts, and paths as needed.
+
+## Usage
+
+To run the automation script, execute the `main.py` file from the project root directory:
+
+```bash
+python main.py
+```
+
+The script will start, log its progress to the console and `app.log`, and perform the automated tasks.
+
+## How It Works
+
+The script uses the `pyautogui` library to control the mouse and keyboard, simulating user actions. It finds UI elements on the screen by matching them with images stored in the `assets/` directory, powered by OpenCV. The entire process is orchestrated within a structured class-based system for clarity and robustness.
+
+## License
+
+This project is licensed under the MIT License.
