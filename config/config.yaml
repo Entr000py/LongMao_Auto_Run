@@ -1,0 +1,46 @@
+# Basic settings
+screen_resolution:
+  # Screen resolution, automatically detected if not specified
+  width: null
+  height: null
+
+# Nox player settings
+nox:
+  # Path to Nox executable
+  executable_path: "Nox"
+  # Region of the Nox window on the screen
+  region: null
+
+# Image assets settings
+assets:
+  # Directory where image assets are stored
+  path: "assets"
+  # Confidence level for image recognition
+  confidence: 0.6
+
+# WeChat login credentials
+wechat:
+  # Your WeChat account
+  account: ""
+  # Your WeChat password
+  password: ""
+
+# Automation flow settings
+automation:
+  # Time to wait for Nox to start
+  nox_boot_time: 20
+  # Time to wait after an action
+  action_delay: 2
+  # Default timeout for locating an image
+  locate_timeout: 10
+
+# Logging settings
+logging:
+  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+  level: "INFO"
+  # Log file name
+  file: "app.log"
+  # Max size of the log file in bytes
+  max_bytes: 1048576 # 1MB
+  # Number of backup log files to keep
+  backup_count: 5
